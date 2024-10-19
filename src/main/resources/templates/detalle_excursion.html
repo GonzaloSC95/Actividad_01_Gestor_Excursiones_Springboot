@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<link
+			rel="shortcut icon"
+			th:href="@{/img/favicon.png}"
+			type="image/x-icon"
+		/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Administración de Excursiones</title>
+		<link rel="stylesheet" th:href="@{/css/style.css}" />
+	</head>
+	<body>
+		<div class="container">
+			<!-- Panel de Administración -->
+			<div class="panel">
+				<h2 th:text="${excursion.descripcion}"></h2>
+				<div class="button-group">
+					<button th:onclick="'location.href=\'' + @{/} + '\''">◀︎</button>
+					<button th:onclick="'location.href=\'' + @{/destacados} + '\''">
+						Destacadas
+					</button>
+					<button th:onclick="'location.href=\'' + @{/creados} + '\''">
+						Creadas
+					</button>
+					<button th:onclick="'location.href=\'' + @{/terminados} + '\''">
+						Terminadas
+					</button>
+				</div>
+			</div>
+
+			<!-- Tabla de Excursiones -->
+			<table class="detalle">
+				<thead>
+					<tr>
+						<th colspan="2">
+							Detalle
+							<a
+								th:href="@{/excursion/modificar/{id}(id=${excursion.idExcursion})}"
+								class="detalle"
+								><img th:src="@{/img/modificar-white.png}" alt="Detalle"
+							/></a>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- Datos en la tabla -->
+					<tr>
+						<td>ID Excursión</td>
+						<td th:text="${excursion.idExcursion}"></td>
+					</tr>
+					<tr>
+						<td>Descripción</td>
+						<td th:text="${excursion.descripcion}"></td>
+					</tr>
+					<tr>
+						<td>Origen</td>
+						<td th:text="${excursion.origen}"></td>
+					</tr>
+					<tr>
+						<td>Destino</td>
+						<td th:text="${excursion.destino}"></td>
+					</tr>
+					<tr>
+						<td>Fecha Excursión</td>
+						<td
+							th:text="${#dates.format(excursion.fechaExcursion, 'dd-MM-yyyy')}"
+						></td>
+					</tr>
+					<tr>
+						<td>Duración</td>
+						<td th:text="${excursion.duracion}"></td>
+					</tr>
+					<tr>
+						<td>Estado</td>
+						<td th:text="${excursion.estado}"></td>
+					</tr>
+					<tr>
+						<td>¿Destacada?</td>
+						<td th:text="${excursion.destacado}"></td>
+					</tr>
+					<tr>
+						<td>Aforo Máximo</td>
+						<td th:text="${excursion.aforoMaximo}"></td>
+					</tr>
+					<tr>
+						<td>Asistentes Mínimos</td>
+						<td th:text="${excursion.minimoAsistentes}"></td>
+					</tr>
+					<tr>
+						<td>Precio Unitario (€)</td>
+						<td th:text="${excursion.precioUnitario}"></td>
+					</tr>
+					<tr>
+						<td>Fecha de Alta</td>
+						<td
+							th:text="${#dates.format(excursion.fechaAlta, 'dd-MM-yyyy')}"
+						></td>
+					</tr>
+					<tr>
+						<td>Imagen</td>
+						<td><img th:src="${excursion.imagen}" /></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>

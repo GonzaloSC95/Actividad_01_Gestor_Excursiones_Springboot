@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<link
+			rel="shortcut icon"
+			th:href="@{/img/favicon.png}"
+			type="image/x-icon"
+		/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Administración de Excursiones</title>
+		<link rel="stylesheet" th:href="@{/css/style.css}" />
+	</head>
+	<body>
+		<div class="container">
+			<!-- Panel de Administración -->
+			<div class="panel">
+				<!-- Titulo y mensajes flash -->
+				<div>
+					<h2>Alta de Excursión</h2>
+					<!-- Mensaje Flash -->
+					<div
+						th:if="${mensajeOk}"
+						class="flash-message-ok"
+						th:text="${mensajeOk}"
+					></div>
+					<div
+						th:if="${mensajeKo}"
+						class="flash-message-ko"
+						th:text="${mensajeKo}"
+					></div>
+				</div>
+
+				<!-- Botonera de administración -->
+				<div class="button-group">
+					<button th:onclick="'location.href=\'' + @{/} + '\''">◀︎</button>
+					<button th:onclick="'location.href=\'' + @{/destacados} + '\''">
+						Destacadas
+					</button>
+					<button th:onclick="'location.href=\'' + @{/creados} + '\''">
+						Creadas
+					</button>
+					<button th:onclick="'location.href=\'' + @{/terminados} + '\''">
+						Terminadas
+					</button>
+				</div>
+			</div>
+
+			<!-- Formulario de alta -->
+			<form
+				th:action="@{/excursion/alta}"
+				th:object="${excursion}"
+				method="post"
+			>
+				<table class="detalle">
+					<thead>
+						<tr>
+							<th colspan="2">Detalle</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- Datos en la tabla -->
+						<tr>
+							<td>ID Excursión</td>
+							<td><input type="text" th:field="*{idExcursion}" readonly /></td>
+						</tr>
+						<tr>
+							<td>Descripción</td>
+							<td><input type="text" th:field="*{descripcion}" required /></td>
+						</tr>
+						<tr>
+							<td>Origen</td>
+							<td><input type="text" th:field="*{origen}" required /></td>
+						</tr>
+						<tr>
+							<td>Destino</td>
+							<td><input type="text" th:field="*{destino}" required /></td>
+						</tr>
+						<tr>
+							<td>Fecha Excursión</td>
+							<td>
+								<input type="date" th:field="*{fechaExcursion}" required />
+							</td>
+						</tr>
+						<tr>
+							<td>Duración</td>
+							<td><input type="number" th:field="*{duracion}" required /></td>
+						</tr>
+						<tr>
+							<td>Estado</td>
+							<td>
+								<select th:field="*{estado}" required>
+									<option value="CREADA">CREADA</option>
+									<option value="TERMINADA">TERMINADA</option>
+									<option value="CANCELADA">CANCELADA</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>¿Destacada?</td>
+							<td>
+								<input type="radio" th:field="*{destacado}" value="S" checked />
+								<label for="destacadoS">S</label>
+								<input
+									type="radio"
+									th:field="*{destacado}"
+									value="N"
+									id="destacadoN"
+								/>
+								<label for="destacadoN">N</label>
+							</td>
+						</tr>
+						<tr>
+							<td>Aforo Máximo</td>
+							<td>
+								<input type="number" th:field="*{aforoMaximo}" required />
+							</td>
+						</tr>
+						<tr>
+							<td>Asistentes Mínimos</td>
+							<td>
+								<input type="number" th:field="*{minimoAsistentes}" required />
+							</td>
+						</tr>
+						<tr>
+							<td>Precio Unitario (€)</td>
+							<td>
+								<input
+									type="number"
+									step="0.01"
+									th:field="*{precioUnitario}"
+									required
+								/>
+							</td>
+						</tr>
+						<tr>
+							<td>Imagen (Url)</td>
+							<td><input type="text" th:field="*{imagen}" required /></td>
+						</tr>
+						<tr>
+							<td>Fecha de Alta</td>
+							<td><input type="date" th:field="*{fechaAlta}" required /></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="button-group"><button type="submit">Crear</button></div>
+			</form>
+		</div>
+	</body>
+</html>

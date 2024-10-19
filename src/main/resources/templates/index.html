@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<link
+			rel="shortcut icon"
+			th:href="@{/img/favicon.png}"
+			type="image/x-icon"
+		/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Administración de Excursiones</title>
+		<link rel="stylesheet" th:href="@{/css/style.css}" />
+	</head>
+	<body>
+		<div class="container">
+			<!-- Panel de Administración -->
+			<div class="panel">
+				<!-- Titulo y mensajes flash -->
+				<div>
+					<h2>Panel Administración de Excursiones</h2>
+					<!-- Mensaje Flash -->
+					<div
+						th:if="${mensajeOk}"
+						class="flash-message-ok"
+						th:text="${mensajeOk}"
+					></div>
+					<div
+						th:if="${mensajeKo}"
+						class="flash-message-ko"
+						th:text="${mensajeKo}"
+					></div>
+					<div class="button-group">
+						<button th:onclick="'location.href=\'' + @{/excursion/alta} + '\''">
+							Nueva excursión
+						</button>
+						<button th:onclick="'location.href=\'' + @{/busqueda} + '\''">
+							Buscar
+						</button>
+					</div>
+				</div>
+
+				<!-- Botonera de administración -->
+				<div class="button-group">
+					<button th:onclick="'location.href=\'' + @{/destacados} + '\''">
+						Destacadas
+					</button>
+					<button th:onclick="'location.href=\'' + @{/creados} + '\''">
+						Creadas
+					</button>
+					<button th:onclick="'location.href=\'' + @{/terminados} + '\''">
+						Terminadas
+					</button>
+				</div>
+			</div>
+
+			<!-- Tabla de Excursiones -->
+			<table>
+				<thead>
+					<tr>
+						<th>Descripción</th>
+						<th>Origen</th>
+						<th>Destino</th>
+						<th>Fecha</th>
+						<th>Precio</th>
+						<th>Detalle</th>
+						<th>Cancelar</th>
+						<th>Modificar</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- Datos en la tabla -->
+					<tr th:each="e : ${excursiones}">
+						<td th:text="${e.descripcion}"></td>
+						<td th:text="${e.origen}"></td>
+						<td th:text="${e.destino}"></td>
+						<td th:text="${#dates.format(e.fechaExcursion,'dd-MM-yyyy')}"></td>
+						<td th:text="${e.precioUnitario} + ' €'"></td>
+						<td>
+							<a
+								th:href="@{excursion/detalle/{id}(id=${e.idExcursion})}"
+								class="detalle"
+								><img th:src="@{/img/detalle.png}" alt="Detalle"
+							/></a>
+						</td>
+						<td>
+							<a
+								th:href="@{excursion/cancelar/{id}(id=${e.idExcursion})}"
+								class="cancelar"
+								><img th:src="@{/img/cancelar.png}" alt="Cancelar"
+							/></a>
+						</td>
+						<td>
+							<a
+								th:href="@{excursion/modificar/{id}(id=${e.idExcursion})}"
+								class="modificar"
+								><img th:src="@{/img/modificar.png}" alt="Modificar"
+							/></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>

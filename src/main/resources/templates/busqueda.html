@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<link
+			rel="shortcut icon"
+			th:href="@{/img/favicon.png}"
+			type="image/x-icon"
+		/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Administración de Excursiones</title>
+		<link rel="stylesheet" th:href="@{/css/style.css}" />
+	</head>
+	<body>
+		<div class="container">
+			<!-- Panel de Administración -->
+			<div class="panel">
+				<!-- Titulo y mensajes flash -->
+				<div>
+					<h2>Busqueda de Excursiones</h2>
+					<!-- Botón vinculado al formulario -->
+					<button type="submit" form="busquedaForm">Buscar</button>
+				</div>
+
+				<!-- Botonera de administración -->
+				<div class="button-group">
+					<button th:onclick="'location.href=\'' + @{/} + '\''">◀︎</button>
+					<button th:onclick="'location.href=\'' + @{/destacados} + '\''">
+						Destacadas
+					</button>
+					<button th:onclick="'location.href=\'' + @{/creados} + '\''">
+						Creadas
+					</button>
+					<button th:onclick="'location.href=\'' + @{/terminados} + '\''">
+						Terminadas
+					</button>
+				</div>
+			</div>
+
+			<!-- Formulario de alta -->
+			<form th:action="@{/busqueda}" method="get" id="busquedaForm">
+				<table class="detalle">
+					<tr>
+						<th colspan="2">Origen / Destino</th>
+					</tr>
+						<tr>
+							<td>Origen</td>
+							<td><input type="text" name="origen"/></td>
+						</tr>
+						<tr>
+							<td>Destino</td>
+							<td><input type="text" name="destino"/></td>
+						</tr>
+						<tr>
+						<th colspan="2">Precio Unitario (€)</th>
+					</tr>
+						<tr>
+							<td>Precio Mínimo</td>
+							<td>
+								<input
+									type="number"
+									step="0.01"
+									name="precioUnitario1"
+								/>
+							</td>
+						</tr>
+						<tr>
+							<td>Precio Máximo</td>
+							<td>
+								<input
+									type="number"
+									step="0.01"
+									name="precioUnitario2"
+								/>
+							</td>
+						</tr>
+				</table>
+			</form>
+
+			<!-- Resultados de la búsqueda -->
+        <div th:if="${excursiones}">
+            <h3>Resultados de la Búsqueda</h3>
+            <table class="detalle">
+                <thead>
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Fecha</th>
+                        <th>Precio</th>
+								<th>Detalle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="e : ${excursiones}">
+                        <td th:text="${e.descripcion}"></td>
+                        <td th:text="${e.origen}"></td>
+                        <td th:text="${e.destino}"></td>
+                        <td th:text="${#dates.format(e.fechaExcursion, 'dd-MM-yyyy')}"></td>
+                        <td th:text="${e.precioUnitario}"></td>
+								<td>
+							<a
+								th:href="@{excursion/detalle/{id}(id=${e.idExcursion})}"
+								class="detalle"
+								><img th:src="@{/img/detalle.png}" alt="Detalle"
+							/></a>
+						</td>
+                    </tr>
+                </tbody>
+            </table>
+		</div>
+	</body>
+</html>
